@@ -1,32 +1,41 @@
 {
-  "expo": {
-    "name": "shop-review-app",
-    "slug": "shop-review-app",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
-  }
+	"expo": {
+		"name": "shop-review-app",
+		"slug": "shop-review-app",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/icon.png",
+		"splash": {
+			"image": "./assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/adaptive-icon.png",
+				"backgroundColor": "#FFFFFF"
+			}
+		},
+		"web": {
+			"favicon": "./assets/favicon.png"
+		},
+		"extra": {
+			"firebase": {
+				"apiKey": "AIzaSyBUHx4Zx1mNP3rw047fovuhIol6sO7JBDI",
+				"authDomain": "shop-review-d2fad.firebaseapp.com",
+				"projectId": "shop-review-d2fad",
+				"storageBucket": "shop-review-d2fad.appspot.com",
+				"messagingSenderId": "629163351104",
+				"appId": "1:629163351104:web:26b8b017f89b9cfae253a5",
+				"measurementId": "G-MGN4X142LP"
+			}
+		}
+	}
 }
