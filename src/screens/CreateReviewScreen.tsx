@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { StyleSheet, SafeAreaView, View, Image } from 'react-native'
+import { StyleSheet, SafeAreaView, View, Image, Alert } from 'react-native'
+import { getExtention } from '../utils/file'
+import { ReviewsContext } from '../contexts/reviewsContext'
 /* components */
 import { IconButton } from '../components/IconButton'
 import { TextArea } from '../components/TextArea'
@@ -7,7 +9,7 @@ import { StarInput } from '../components/StarInput'
 import { Button } from '../components/Button'
 import { Loading } from '../components/Loading'
 import firebase from 'firebase'
-import { addReview } from '../lib/firebase'
+import { createReviewRef, uploadImage } from '../lib/firebase'
 /*contexts*/
 import { UserContext } from '../contexts/userContext'
 /* lib */
@@ -33,6 +35,7 @@ export const CreateReviewScreen: React.FC<Props> = ({
 	const [loading, setLoading] = useState<boolean>(false)
 	const [imageUri, setImageUri] = useState<string>('')
 	const { user } = useContext(UserContext)
+	const { reviews, setReviews } = useContext(ReviewsContext)
 
 	useEffect(() => {
 		navigation.setOptions({
@@ -49,21 +52,38 @@ export const CreateReviewScreen: React.FC<Props> = ({
 	}
 
 	const onSubmit = async () => {
+		if (!text || !imageUri) {
+			Alert.alert('レビューまたは画像がありません')
+			return
+		}
 		setLoading(true)
-		// firestoreに保存する
+		// documentIDを取得
+		const ReviewDocRef = await createReviewRef(shop.id)
+		// storageのpathを決定
+		const ext = getExtention(imageUri)
+		const storagePath = `reviews/${ReviewDocRef.id}.${ext}`
+		// 画像をstorageにアップロード
+		const downloadUrl = await uploadImage(imageUri, storagePath)
+		// reviewにドキュメントを作成
 		const review = {
+			id: ReviewDocRef.id,
 			user: {
+				id: user.id,
 				name: user.name,
 			},
 			shop: {
+				id: shop.id,
 				name: shop.name,
 			},
 			text,
 			score,
+			imageUrl: downloadUrl,
 			updatedAt: firebase.firestore.Timestamp.now(),
 			createdAt: firebase.firestore.Timestamp.now(),
 		} as Review
-		await addReview(shop.id, review)
+		await ReviewDocRef.set(review)
+		// レビュー一覧に即時反映
+		setReviews([review, ...reviews])
 
 		setLoading(false)
 		navigation.goBack()

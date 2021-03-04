@@ -1,4 +1,5 @@
-import firebase from 'firebase'
+import  firebase from 'firebase/app'
+import 'firebase/firestore'
 
 type UserRef = {
 	id: string
@@ -13,6 +14,7 @@ export type Review = {
 	id?: string
 	text: string
 	score: number
+	imageUrl: string
 	user: UserRef
 	shop: ShopRef
 	updatedAt: firebase.firestore.Timestamp
