@@ -1,13 +1,20 @@
 import React, { useEffect, useContext } from 'react'
 import { StyleSheet, SafeAreaView, ActivityIndicator, Text } from 'react-native'
-import { signin } from '../lib/firebase'
+import { signin, updateUser } from '../lib/firebase'
 import { UserContext } from '../contexts/userContext'
+import { registerForPushNotificationsAsync } from '../lib/notification'
 
 export const AuthScreen: React.FC = () => {
 	const { setUser } = useContext(UserContext)
 	useEffect(() => {
 		const fetchUser = async () => {
 			const user = await signin()
+
+			const pushToken = await registerForPushNotificationsAsync()
+			if (pushToken && user.pushToken !== pushToken) {
+				await updateUser(user.id, { pushToken })
+				user.pushToken = pushToken
+			}
 			setUser(user)
 		}
 		fetchUser()

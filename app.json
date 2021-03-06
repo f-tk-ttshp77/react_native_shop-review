@@ -35,6 +35,10 @@
 				"messagingSenderId": "629163351104",
 				"appId": "1:629163351104:web:26b8b017f89b9cfae253a5",
 				"measurementId": "G-MGN4X142LP"
+			},
+			"algolia": {
+				"appId": "JIU3ZARHWV",
+				"searchApiKey": "013c3c82d5ebe3e72996dd8f9d57056d"
 			}
 		}
 	}

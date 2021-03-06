@@ -1,9 +1,10 @@
-import  firebase from 'firebase/app'
+import firebase from 'firebase/app'
 import 'firebase/firestore'
 
 export type User = {
 	id?: string
 	name: string
+	pushToken?: string
 	updatedAt: firebase.firestore.Timestamp
 	createdAt: firebase.firestore.Timestamp
 }
